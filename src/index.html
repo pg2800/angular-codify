@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-ng-app="CustomDirectives">
+<html lang="es" data-ng-app="liveTest">
 <head>
 	<title>My site</title>
 	<meta charset="UTF-8">
@@ -9,10 +9,12 @@
 	<meta name="keywords" content="HTML5 CSS3 JavaScript">
 	<meta name="author" content="kmu">
 	<!-- Bootstrap's latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+	<!-- HighlightJS --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
 </head>
 <body>
-	<div id="main" data-cd:code="code:inScope">
+	<div id="main" data-cd:code="code:inActual">
 		<header></header>
 		<nav></nav>
 		<br />
@@ -22,7 +24,12 @@
 			<button class="btn btn-primary">bla</button>
 			<br />
 			<br />
-			<code data-ng-bind="code|html:'inLine'"></code>
+			<code data-ng-bind="code"></code>
+			<br />
+			<br />
+			<p>Using Angular-HighlightJS Custom Directive</p>
+			<div hljs language="html" source="code"></div>
+
 		</section>
 
 		<article></article>
@@ -37,6 +44,13 @@
 	<!-- AngularJS :: Sanitize Module --> <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular-sanitize.min.js"></script>
 
 	<script type="text/javascript" src="customDirective/cdCode.js"></script>
+
+	<!-- HighlightJS --> <script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
+	<script src="//pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+
+	<script type="text/javascript">
+		angular.module('liveTest', ["CustomDirectives"]);
+	</script>
 
 </body>
 </html>

@@ -20,10 +20,9 @@ angular.module('CustomDirectives', ["ngRoute"])
 				inScope: $scope, // Current Scope
 				inActual: iAttrs.flag === "inActual" && (function($scope, prop){
 					do {
+						if($scope.hasOwnProperty(prop) || !$scope.$parent) return $scope;
 						$scope = $scope.$parent;
-						if($scope.hasOwnProperty(prop)) return $scope;
-					} while($scope.$parent);
-					return $scope; // this is the outter most parent just in case it did not find any.
+					} while($scope);
 				})($scope, iAttrs.cdCode) // Existing Variable within the Scope or any Parent
 			}, selectedScope;
 

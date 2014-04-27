@@ -10,8 +10,6 @@ angular.module('CustomDirectives', ["ngRoute"])
 			var element = iElement[0], 
 			options = iAttrs.cdCode.split(':');
 
-			// console.log(options);
-
 			iAttrs.cdCode = options[0];
 			iAttrs.flag = options[1];
 

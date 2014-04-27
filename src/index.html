@@ -11,10 +11,10 @@
 	<!-- Bootstrap's latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-	<!-- HighlightJS --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+	<!-- HighlightJS :: Style --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/zenburn.min.css">
 </head>
 <body>
-	<div id="main" data-cd:code="code:inActual">
+	<div id="main" data-cd:code="code:inScope">
 		<header></header>
 		<nav></nav>
 		<br />
@@ -28,7 +28,7 @@
 			<br />
 			<br />
 			<p>Using Angular-HighlightJS Custom Directive</p>
-			<div hljs language="html" source="code"></div>
+			<div hljs data-language="html" data-source="code"></div>
 
 		</section>
 
@@ -46,10 +46,16 @@
 	<script type="text/javascript" src="customDirective/cdCode.js"></script>
 
 	<!-- HighlightJS --> <script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
-	<script src="//pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+	<!-- Angular-HighlightJS --> <script src="//pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
 
 	<script type="text/javascript">
-		angular.module('liveTest', ["CustomDirectives"]);
+		angular.module('liveTest', ["CustomDirectives", "hljs"])
+		.config(function (hljsServiceProvider) {
+			hljsServiceProvider.setOptions({
+    		// replace tab with 2 spaces
+    		tabReplace: '  '
+    	});
+		});
 	</script>
 
 </body>

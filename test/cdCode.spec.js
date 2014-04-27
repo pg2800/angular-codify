@@ -1,5 +1,11 @@
 describe("Custom Directives", function() {
-	describe("cdCode", function() {
-		expect(true).toBeTruthy();
+	it("should find the module", function() {
+		var $injector = angular.injector(['CustomDirectives']);
+		expect($injector).toBeDefined();
+	});
+	describe("cdCode Directive", function() {
+		it("should behave...", function() {
+			expect(true).toBeTruthy();
+		});
 	});
 });

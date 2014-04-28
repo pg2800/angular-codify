@@ -75,6 +75,16 @@ describe("Custom Directives", function() {
 				expect(actualAncestor.hasOwnProperty("testDiv")).toBeFalsy();
 				expect($rootScope.testDiv).not.toBeNull();
 			});
+
+			it("should declare the object in the $rootScope", function() {
+				delete actualAncestor.testDiv;
+				$compile('<div data-cd:code="testDiv:inRoot"></div>')(thisScope);
+
+				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
+				expect(parentScope.hasOwnProperty("testDiv")).toBeFalsy();
+				expect(actualAncestor.hasOwnProperty("testDiv")).toBeFalsy();
+				expect($rootScope.testDiv).not.toBeNull();
+			});
 		});
 
 		//
@@ -88,7 +98,7 @@ describe("Custom Directives", function() {
 
 			expect(obj.code).toBeDefined();
 			expect(obj.compiled).toBeDefined();
-			
+
 			expect(obj.compiled).toBe('<div></div>');
 			expect(obj.code).toBe('<div class="ng-scope"></div>');
 		});

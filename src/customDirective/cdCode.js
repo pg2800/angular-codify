@@ -37,6 +37,7 @@ angular.module('CustomDirectives', ["ngRoute"])
 							$scope = $scope.$parent;
 						} while($scope);
 					})($scope, iAttrs.cdCode) // Existing Variable within the Scope or any Parent
+					,inRoot: $scope.$root
 				}
 				,selectedScope;
 

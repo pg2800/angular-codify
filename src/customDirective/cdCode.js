@@ -4,9 +4,9 @@ angular.module('CustomDirectives', ["ngRoute"])
 	,lastTabs = /(\t*)(.+?)$/;
 
 	return {
-		priority: 0
-		,restrict: 'A'
-		,scope: false
+		priority: 0 // Default
+		,restrict: 'A' // Only as Attribute
+		,scope: false // Uses the current scope
 		,compile: function compile(templateElement, templateAttrs) {
 			var init = templateElement[0].outerHTML.replace(cdCodeRegExp,'')
 			,identedTabs = init.match(lastTabs) // We match for the tabs of last closing tag in the string

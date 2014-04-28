@@ -39,7 +39,7 @@ describe("Custom Directives", function() {
 				$rootScope.testDiv = actualAncestor.testDiv = null;
 			}));
 
-			it("should declare the variable in the CURRENT scope", function() {
+			it("should declare the object in the CURRENT scope", function() {
 				$compile('<div data-cd:code="testDiv:inScope"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeTruthy();
@@ -48,7 +48,7 @@ describe("Custom Directives", function() {
 				expect($rootScope.testDiv).toBeNull();
 			});
 
-			it("should declare the variable in the PARENT scope", function() {
+			it("should declare the object in the PARENT scope", function() {
 				$compile('<div data-cd:code="testDiv:inParent"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
@@ -57,7 +57,7 @@ describe("Custom Directives", function() {
 				expect($rootScope.testDiv).toBeNull();
 			});
 
-			it("should declare the variable in the ANCESTOR scope", function() {
+			it("should declare the object in the ANCESTOR scope", function() {
 				$compile('<div data-cd:code="testDiv:inActual"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
@@ -66,7 +66,7 @@ describe("Custom Directives", function() {
 				expect($rootScope.testDiv).toBeNull();
 			});
 
-			it("should declare the variable in the OUTERMOST scope", function() {
+			it("should declare the object in the OUTERMOST scope", function() {
 				delete actualAncestor.testDiv;
 				$compile('<div data-cd:code="testDiv:inActual"></div>')(thisScope);
 
@@ -77,5 +77,20 @@ describe("Custom Directives", function() {
 			});
 		});
 
-});
+		//
+		it("should create an object in the scope", function() {
+			var element = $compile('<div data-cd:code="obj:inScope"></div>')($scope);
+			expect($scope.obj).toBeDefined();
+		});
+		it("found the object content correct", function() {
+			var element = $compile('<div data-cd:code="obj:inScope"></div>')($scope)
+			,obj = $scope.obj;
+
+			expect(obj.code).toBeDefined();
+			expect(obj.compiled).toBeDefined();
+			
+			expect(obj.compiled).toBe('<div></div>');
+			expect(obj.code).toBe('<div class="ng-scope"></div>');
+		});
+	});
 });

@@ -16,12 +16,121 @@
 	<br />
 	<br />
 	<div class="container">
-		<div id="example" data-cd:code="theExample:inActual">
+		<p class="lead">Lets write a very simple example</p>
+		<p>Lets say we have a button and we want to display its code withour copying it every time we make a change.</p>
+		<p>We will use bootstrap and 'cdCode' custom directive the following way:</p>
+		<ul>
+			<li>
+				<p>First we want to create the button</p>
+				<button class="btn btn-primary">My Button</button>
+			</li>
+			<br />
+			<li>
+				<p>Then, obviously we would like to share our knowledge of a <strong>very simple</strong> code.</p>
+				<p>
+					<code> &lt;button class="btn btn-primary"&gt;My Button&lt;/button&gt; </code>
+				</p>
+			</li>
+			<li>
+				<p>Easy right?</p>
+				<p>Not really. We had to copy the code and escape the tags so the code does not get rendered by the browser. The following way:</p>
+				<p>
+					<code> &amp;lt;button class="btn btn-primary"&amp;gt;My Button&amp;lt;/button&amp;gt;</code>
+				</p>
+				<p>Doesn't that looks great?</p>
+				<p>==> The answer is... <strong>NOT!</strong>. It looks awful and it is more than awful to have to escape everything.</p>
+			</li>
+			<li>
+				<p>It gets worst!</p>
+				<p>What if we change something in the code?... Yes, if the changes were small you might be able to change it quick but if the changes were drastic, you might even need to do everything again.</p>
+				<p><strong>We get to the conclusion</strong> that "Sharing our knowledge is not worth the time."</p>
+			</li>
+			<li>
+				<p>Lucky! Angular does that for us when we use the ngBind directive. And there are even some tools to help us make the code look prety.</p>
+				<p>Buuuuut! We still have to copy and paste the code everytime we make a change.</p>
+				<p><strong>With the 'cdCode' Custom Directive we can immediately access the element through the scope.</strong></p>
+			</li>
+		</ul>
+
+		<br />
+		<p class="lead">Lets redo the example above</p>
+		<p>Lets say we will have a variable in the root scope ($rootScope) to hold the button's code, I will call it: 'buttonExample'</p>
+		<p>
+			<code ng-bind="btnExampleCodeElement.compiled"></code>
+		</p>
+		<p>
+			What is ".compiled"? This directive creates an object {code: "..updated code..", compiled: "..code from before angular makes changes.."}.
+		</p>
+		<p>
+			&nbsp;&nbsp; <strong>Future versions of this directive will come with two filters to be able to filterOut or filterIn attributes in the elements string.</strong>
+		</p>
+		<p>The button code will look like:</p>
+		<p>
+			<code data-cd:code="btnExampleCodeElement:inRoot" data-ng-bind="buttonExample.compiled"></code>
+		</p>
+		<p>
+			And the button will be:
+			<button data-cd:code="buttonExample:inRoot" class="btn btn-success">My OTHER Button</button>
+		</p>
+		<p>
+			You might want to know that <strong>I actually used the directive to do this simple example.</strong>
+		</p>
+		<p class="lead">But, HOW?</p>
+		<p>Easy, you add the directive as an attribute of the element:</p>
+		<code>&lt;button data-cd-code="buttonExample:inRoot" class="btn btn-success"&gt;My OTHER Button&lt;/button&gt;</code>
+		<p>As you can see, there is an argument that we send after the colon :: 'inRoot'. There are actually 4 options, and they will tell angular where to add the variable that will hold the code.</p>
+		<ol>
+			<li>
+				inScope :: default option
+				<p>In the current scope</p>
+			</li>
+			<li>
+				inParent
+				<p>In the parent's scope</p>
+			</li>
+			<li>
+				inActual
+				<p>This will look through the chain of scopes for the variable you specified.</p>
+				<p> .. if it does not find one, it will add it in the outtermost scope.</p>
+				<p>This is very useful because we might want to create the variable in a scope that is further away than just the parent.</p>
+			</li>
+			<li>
+				inRoot
+				<p>As it says. This will tell Angular to create it in the root scope ($rootScope) of the current application.</p>
+				<p>As in JavaScript, it is not wise to pollute the scope. Be careful when using this option.</p>
+			</li>
+		</ol>
+
+		<br />
+		<br />
+		<br />
+		<br />
+		<p class="lead">Lets write a more complicated example but using HighlightJS and Angular-HighlightJS to display the code.</p>
+		<br />
+		<p>Lets create something where we can write and display our code at the same time like:</p>
+		<div data-hljs="" data-source="theExample.compiled" data-language="html"></div>
+		<div data-hljs="" data-source="dynamicCode.compiled" data-language="html"></div>
+
+		<div id="example" data-ng-init="" data-cd:code="theExample:inRoot">
 			<div class="form-group">
 				<label for="example">Fun easy stuff.</label>
-				<textarea class="form-control" id="example" placeholder="Write your code" data-ng-bind="theCode"></textarea>
+				<textarea id="theCode" class="form-control" id="example" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;"></textarea>
 			</div>
 		</div>
+
+		<div data-cd:code="dynamicCode:inRoot" data-hljs="" data-source="theCode"></div>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+
 	</div>
 
 	<!-- jQuery --> <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0-rc1/jquery.min.js"></script>
@@ -43,6 +152,17 @@
     		// replace tab with 2 spaces
     		tabReplace: '  '
     	});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#theCode").on("keydown", function (e){
+				if(e.keyCode == "9") {
+					e.preventDefault();
+					$(this).val($(this).val()+"\t")
+				}
+			});
 		});
 	</script>
 

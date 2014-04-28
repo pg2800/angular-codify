@@ -11,25 +11,51 @@
 	<!-- Bootstrap's latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-	<!-- HighlightJS :: Style --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/zenburn.min.css">
+	<!-- HighlightJS :: Style --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/rainbow.min.css">
 </head>
 <body>
-	<div id="main" data-cd:code="code:inScope">
+	<div id="main" data-cd:code="src:inScope">
 		<header></header>
 		<nav></nav>
 		<br />
 		<br />
 		<br />
 		<section class="container">
-			<button class="btn btn-primary">bla</button>
+			<button class="btn btn-primary" data-cd:code="button:inScope">bla</button>
 			<br />
 			<br />
-			<code data-ng-bind="code"></code>
+			<p>Using Twitter Boostrap</p>
+			<code data-ng-bind="button.code"></code>
 			<br />
 			<br />
 			<p>Using Angular-HighlightJS Custom Directive</p>
-			<div hljs data-language="html" data-source="code"></div>
-
+			<p>COMPILED CODE :: Before angular continues with the rest of the code.</p>
+			<div hljs data-language="html" data-source="src.compiled" class="pre-scrollable"></div>
+			<br />
+			<br />
+			<p>ACTUAL CODE :: Most .</p>
+			<div hljs data-language="html" data-source="src.code" class="pre-scrollable"></div>
+			<br />
+			<br />
+			<p>Custom Directive Code Priority</p>
+			<div data-cd:code="repeat:inScope" ng-init="dummy=[1,2,3]">
+				<ul>
+					<li data-ng-repeat="i in dummy" data-ng-bind="i"></li>
+				</ul>
+				<br />
+				<ul data-cd:code="t:inScope">
+					<h1>ngRepeat code BEFORE</h1>
+					<h2 data-source="t.compiled" hljs data-language="html"></h2>
+					<li data-ng-repeat="i in dummy" data-cd:code="item:inScope" hljs data-source="item.compiled" language="html"></li>
+				</ul>
+				<br />
+				<ul data-cd:code="s:inScope">
+				<h1>ngRepeat code AFTER</h1>
+					<h2 data-source="s.code" hljs data-language="html"></h2>
+					<li data-ng-repeat="i in dummy" data-cd:code="item:inScope" hljs data-source="item.code" language="html"></li>
+				</ul>
+				<br />
+			</div>
 		</section>
 
 		<article></article>

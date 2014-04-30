@@ -66,11 +66,11 @@
 		</p>
 		<p>The button code will look like:</p>
 		<p>
-			<code data-cd:code="btnExampleCodeElement:inRoot" data-ng-bind="buttonExample.compiled"></code>
+			<code data-codify-in="btnExampleCodeElement:inRoot" data-ng-bind="buttonExample.compiled"></code>
 		</p>
 		<p>
 			And the button will be:
-			<button data-cd:code="buttonExample:inRoot" class="btn btn-success">My OTHER Button</button>
+			<button data-codify-in="buttonExample:inRoot" class="btn btn-success">My OTHER Button</button>
 		</p>
 		<p>
 			You might want to know that <strong>I actually used the directive to do this simple example.</strong>
@@ -111,7 +111,7 @@
 		<div data-hljs="" data-source="theExample.code" data-language="html"></div>
 		<div data-hljs="" data-source="dynamicCode.compiled" data-language="html"></div>
 
-		<div id="example" data-cd:code="theExample:inRoot">
+		<div id="example" data-codify-in="theExample:inRoot">
 			<div class="form-group">
 				<label for="example">Fun easy stuff.</label>
 				<textarea id="theCode" class="form-control" id="example" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;"></textarea>
@@ -121,7 +121,7 @@
 			</div>
 		</div>
 
-		<div data-cd:code="dynamicCode:inRoot" data-hljs="" data-source="theCode"></div>
+		<div data-codify-in="dynamicCode:inRoot" data-hljs="" data-source="theCode"></div>
 		<br />
 		<br />
 		<br />
@@ -143,13 +143,13 @@
 	<!-- AngularJS ngRoute --> <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.0rc3/angular-route.min.js"></script>
 	<!-- AngularJS :: Sanitize Module --> <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular-sanitize.min.js"></script>
 
-	<script type="text/javascript" src="customDirective/cdCode.js"></script>
+	<script type="text/javascript" src="customDirective/codify.js"></script>
 
 	<!-- HighlightJS --> <script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
 	<!-- Angular-HighlightJS --> <script src="//pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
 
 	<script type="text/javascript">
-		angular.module('liveTest', ["CustomDirectives", "hljs"])
+		angular.module('liveTest', ["codify", "hljs"])
 		.config(function (hljsServiceProvider) {
 			hljsServiceProvider.setOptions({
     		// replace tab with 2 spaces

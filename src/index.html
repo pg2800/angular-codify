@@ -9,7 +9,7 @@
 	<!-- Bootstrap's latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-	<!-- HighlightJS :: Style --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/rainbow.min.css">
+	<!-- HighlightJS :: Style --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
 </head>
 <body>
 	<br />
@@ -108,13 +108,16 @@
 		<p class="lead">Lets write a more complicated example but using HighlightJS and Angular-HighlightJS to display the code.</p>
 		<br />
 		<p>Lets create something where we can write and display our code at the same time like:</p>
-		<div data-hljs="" data-source="theExample.compiled" data-language="html"></div>
+		<div data-hljs="" data-source="theExample.code" data-language="html"></div>
 		<div data-hljs="" data-source="dynamicCode.compiled" data-language="html"></div>
 
 		<div id="example" data-cd:code="theExample:inRoot">
 			<div class="form-group">
 				<label for="example">Fun easy stuff.</label>
 				<textarea id="theCode" class="form-control" id="example" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;"></textarea>
+				<ul ng-init="dummy=[1,2,3,4,5]">
+					<li ng-repeat="i in dummy" ng-bind="i"></li>
+				</ul>
 			</div>
 		</div>
 
@@ -157,11 +160,23 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
+			var start, end;
 			$("#theCode").on("keydown", function (e){
+				start = e.target.selectionStart;
+				end = e.target.selectionEnd;
 				if(e.keyCode == "9") {
+					// var val = $(this).val();
+					// $(this).val(val.substr(0,start) + '\t' + val.substr(end));
 					e.preventDefault();
-					$(this).val($(this).val()+"\t")
+					$(this).replaceCaretSelection({text:'\t'});
 				}
+			});
+			$("#theCode").on("keyup", function (e){
+				if (e.keyCode == "9") {
+					$("#theCode").moveStart(start + 1);
+					$("#theCode").moveEnd(start + 1);
+					console.log("HOLA");
+				};
 			});
 		});
 	</script>

@@ -92,15 +92,17 @@ describe("Codify Custom Directive", function() {
 			var element = $compile('<div data-codify-in="obj:inScope"></div>')($scope);
 			expect($scope.obj).toBeDefined();
 		});
-		it("found the object content correct", function() {
+		it("found the object content correct", inject(function($timeout) {
 			var element = $compile('<div data-codify-in="obj:inScope"></div>')($scope)
 			,obj = $scope.obj;
+
+			$timeout.flush();
 
 			expect(obj.code).toBeDefined();
 			expect(obj.compiled).toBeDefined();
 
 			expect(obj.compiled).toBe('<div></div>');
 			expect(obj.code).toBe('<div class="ng-scope"></div>');
-		});
+		}));
 	});
 });

@@ -1,5 +1,5 @@
 angular.module('codify', ["ngRoute"])
-.directive('codifyIn', [function () {
+.directive('codifyIn', ["$timeout", function ($timeout) {
 	var codifyInRegExp = /\s?(?:(?:data|x)[-:_])?codify[-:_]in\s*?=\s*?".*?"/i
 	,lastTabs = /(\t*)(.+?)$/;
 
@@ -20,7 +20,7 @@ angular.module('codify', ["ngRoute"])
 			// Remove tabs from initial code:
 			identedTabsRegExp && (init = init.replace(identedTabsRegExp, ''));
 
-			return function link($scope, instanceElement, instanceAttrs) {
+			return function link(scope, instanceElement, instanceAttrs) {
 				if(!instanceAttrs.codifyIn) return;
 				var options = instanceAttrs.codifyIn.split(':')
 				,element = identedTabsRegExp? instanceElement[0].outerHTML.replace(identedTabsRegExp,'') : instanceElement[0].outerHTML;
@@ -29,19 +29,23 @@ angular.module('codify', ["ngRoute"])
 				instanceAttrs.flag = options[1];
 
 				var scopes = {
-					inParent: $scope.$parent // Parent Scope
-					,inScope: $scope // Current Scope
-					,inActual: instanceAttrs.flag === "inActual" && (function($scope, prop){
+					inParent: scope.$parent // Parent Scope
+					,inScope: scope // Current Scope
+					,inActual: instanceAttrs.flag === "inActual" && (function(scope, prop){
 						do {
-							if($scope.hasOwnProperty(prop) || !$scope.$parent) return $scope;
-						} while($scope = $scope.$parent);
-					})($scope, instanceAttrs.codifyIn) // Existing Variable within the Scope or any Parent
-					,inRoot: $scope.$root
+							if(scope.hasOwnProperty(prop) || !scope.$parent) return scope;
+						} while(scope = scope.$parent);
+					})(scope, instanceAttrs.codifyIn) // Existing Variable within the Scope or any Parent
+					,inRoot: scope.$root
 				}
 				,selectedScope;
 
 				selectedScope = scopes[instanceAttrs.flag] || scopes.inScope;
-				selectedScope[instanceAttrs.codifyIn] = {code: element.replace(codifyInRegExp,''), compiled: init};
+				selectedScope[instanceAttrs.codifyIn] = {linked: element.replace(codifyInRegExp,''), compiled: init};
+				$timeout(function (){
+					var element = identedTabsRegExp? instanceElement[0].outerHTML.replace(identedTabsRegExp,'') : instanceElement[0].outerHTML;
+					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
+				}, 0);
 			}
 		}
 	};

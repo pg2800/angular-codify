@@ -59,7 +59,7 @@
 			<code ng-bind="btnExampleCodeElement.compiled"></code>
 		</p>
 		<p>
-			What is ".compiled"? This directive creates an object {code: "..updated code..", compiled: "..code from before angular makes changes.."}.
+			What is ".compiled"? This directive creates an object {linked: "..code at the linking function..", compiled: "..code at compilation of the directive..", code: "..updated code -- after angular did the changes.."}.
 		</p>
 		<p>
 			&nbsp;&nbsp; <strong>Future versions of this directive will come with two filters to be able to filterOut or filterIn attributes in the elements string.</strong>
@@ -108,7 +108,7 @@
 		<p class="lead">Lets write a more complicated example but using HighlightJS and Angular-HighlightJS to display the code.</p>
 		<br />
 		<p>Lets create something where we can write and display our code at the same time like:</p>
-		<div data-hljs="" data-source="theExample.code" data-language="html"></div>
+		<div data-hljs="" data-source="theExample.compiled" data-language="html"></div>
 		<div data-hljs="" data-source="dynamicCode.compiled" data-language="html"></div>
 
 		<div id="example" data-codify-in="theExample:inRoot">
@@ -165,18 +165,11 @@
 				start = e.target.selectionStart;
 				end = e.target.selectionEnd;
 				if(e.keyCode == "9") {
-					// var val = $(this).val();
-					// $(this).val(val.substr(0,start) + '\t' + val.substr(end));
+					var val = $(this).val();
+					$(this).val(val.substr(0,start) + '\t' + val.substr(end));
+					$(this)[0].selectionStart = $(this)[0].selectionEnd = start + 1;
 					e.preventDefault();
-					$(this).replaceCaretSelection({text:'\t'});
 				}
-			});
-			$("#theCode").on("keyup", function (e){
-				if (e.keyCode == "9") {
-					$("#theCode").moveStart(start + 1);
-					$("#theCode").moveEnd(start + 1);
-					console.log("HOLA");
-				};
 			});
 		});
 	</script>

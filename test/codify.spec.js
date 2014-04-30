@@ -1,12 +1,12 @@
-describe("Custom Directives", function() {
+describe("Codify Custom Directive", function() {
 	it("should find the module", function() {
-		var $injector = angular.injector(['CustomDirectives']);
+		var $injector = angular.injector(['codify']);
 		expect($injector).toBeDefined();
 	});
 
-	beforeEach(module("CustomDirectives"));
+	beforeEach(module("codify"));
 
-	describe("cdCode Directive", function() {
+	describe("codify-in Directive", function() {
 		var $compile, $scope, $rootScope;
 
 		beforeEach(inject(function (_$compile_, _$rootScope_){
@@ -15,18 +15,18 @@ describe("Custom Directives", function() {
 			$scope = $rootScope.$new();
 		}));
 
-		it("should find the directive", inject(function(_cdCodeDirective_) {
-			expect(_cdCodeDirective_).toBeDefined();
+		it("should find the directive", inject(function(_codifyInDirective_) {
+			expect(_codifyInDirective_).toBeDefined();
 		}));
 
 		it("should compile", function() {
-			expect($compile('<div data-cd:code="testDiv:inScope"></div>')).not.toBeFalsy();
+			expect($compile('<div data-codify-in="testDiv:inScope"></div>')).not.toBeFalsy();
 			expect($compile('<div data-cd-code="testDiv:inParent"></div>')).not.toBeFalsy();
-			expect($compile('<div data:cd:code="testDiv:inActual"></div>')).not.toBeFalsy();
+			expect($compile('<div data:codify-in="testDiv:inActual"></div>')).not.toBeFalsy();
 
-			expect($compile('<div data-cd:code="testDiv:inScope"></div>')($rootScope.$new())[0].nodeName).toBe("DIV");
+			expect($compile('<div data-codify-in="testDiv:inScope"></div>')($rootScope.$new())[0].nodeName).toBe("DIV");
 			expect($compile('<div data-cd-code="testDiv:inParent"></div>')($rootScope.$new())[0].nodeName).toBe("DIV");
-			expect($compile('<div data:cd:code="testDiv:inActual"></div>')($rootScope.$new())[0].nodeName).toBe("DIV");
+			expect($compile('<div data:codify-in="testDiv:inActual"></div>')($rootScope.$new())[0].nodeName).toBe("DIV");
 		});
 
 		describe("Scopes hierarchy", function() {
@@ -40,7 +40,7 @@ describe("Custom Directives", function() {
 			}));
 
 			it("should declare the object in the CURRENT scope", function() {
-				$compile('<div data-cd:code="testDiv:inScope"></div>')(thisScope);
+				$compile('<div data-codify-in="testDiv:inScope"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeTruthy();
 				expect(parentScope.hasOwnProperty("testDiv")).toBeFalsy();
@@ -49,7 +49,7 @@ describe("Custom Directives", function() {
 			});
 
 			it("should declare the object in the PARENT scope", function() {
-				$compile('<div data-cd:code="testDiv:inParent"></div>')(thisScope);
+				$compile('<div data-codify-in="testDiv:inParent"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
 				expect(parentScope.hasOwnProperty("testDiv")).toBeTruthy();
@@ -58,7 +58,7 @@ describe("Custom Directives", function() {
 			});
 
 			it("should declare the object in the ANCESTOR scope", function() {
-				$compile('<div data-cd:code="testDiv:inActual"></div>')(thisScope);
+				$compile('<div data-codify-in="testDiv:inActual"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
 				expect(parentScope.hasOwnProperty("testDiv")).toBeFalsy();
@@ -68,7 +68,7 @@ describe("Custom Directives", function() {
 
 			it("should declare the object in the OUTERMOST scope", function() {
 				delete actualAncestor.testDiv;
-				$compile('<div data-cd:code="testDiv:inActual"></div>')(thisScope);
+				$compile('<div data-codify-in="testDiv:inActual"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
 				expect(parentScope.hasOwnProperty("testDiv")).toBeFalsy();
@@ -78,7 +78,7 @@ describe("Custom Directives", function() {
 
 			it("should declare the object in the $rootScope", function() {
 				delete actualAncestor.testDiv;
-				$compile('<div data-cd:code="testDiv:inRoot"></div>')(thisScope);
+				$compile('<div data-codify-in="testDiv:inRoot"></div>')(thisScope);
 
 				expect(thisScope.hasOwnProperty("testDiv")).toBeFalsy();
 				expect(parentScope.hasOwnProperty("testDiv")).toBeFalsy();
@@ -89,11 +89,11 @@ describe("Custom Directives", function() {
 
 		//
 		it("should create an object in the scope", function() {
-			var element = $compile('<div data-cd:code="obj:inScope"></div>')($scope);
+			var element = $compile('<div data-codify-in="obj:inScope"></div>')($scope);
 			expect($scope.obj).toBeDefined();
 		});
 		it("found the object content correct", function() {
-			var element = $compile('<div data-cd:code="obj:inScope"></div>')($scope)
+			var element = $compile('<div data-codify-in="obj:inScope"></div>')($scope)
 			,obj = $scope.obj;
 
 			expect(obj.code).toBeDefined();

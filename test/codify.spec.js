@@ -104,5 +104,25 @@ describe("Codify Custom Directive", function() {
 			expect(obj.compiled).toBe('<div></div>');
 			expect(obj.code).toBe('<div class="ng-scope"></div>');
 		}));
+
+		describe("Testing if changes are made when the scope changes and angular changes the markup", function() {
+			it("must be compatible with ng-repeat", inject(function($timeout) {
+				$scope.dummy=[1,2,3,4,5];
+				$scope.$digest();
+				var element = $compile('<div id="example"> <div class="form-group"> <label for="example">Fun easy stuff.</label> <textarea id="theCode" class="form-control" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;"></textarea> <ul> <li ng-repeat="i in dummy" ng-bind="i"></li> </ul> </div> </div>')($scope);
+
+				$timeout(function (){}, 0);
+				$timeout.flush();
+				expect($(element).find("li").length).toBe(5);
+
+				$scope.dummy.shift();
+				$scope.$digest();
+				expect($(element).find("li").length).toBe(4);
+			}));
+			it("should change when the ng-repeat changes the code", function() {
+				
+			});
+		});
+
 	});
 });

@@ -43,9 +43,11 @@ angular.module('codify', ["ngRoute"])
 				selectedScope = scopes[instanceAttrs.flag] || scopes.inScope;
 				selectedScope[instanceAttrs.codifyIn] = {linked: element.replace(codifyInRegExp,''), compiled: init};
 				$timeout(function (){
+					// instanceElement.attr("id") && (instanceElement = $("#"+instanceElement.attr("id")));
 					var element = identedTabsRegExp? instanceElement[0].outerHTML.replace(identedTabsRegExp,'') : instanceElement[0].outerHTML;
+					console.log(element);
 					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
-				}, 0);
+				}, 3000);
 			}
 		}
 	};

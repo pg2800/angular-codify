@@ -109,16 +109,13 @@ describe("Codify Custom Directive", function() {
 			it("must be compatible with ng-repeat", inject(function($timeout) {
 				$scope.dummy=[1,2,3,4,5];
 				var element = $compile('<div id="example"> <div class="form-group"> <label for="example">Fun easy stuff.</label> <textarea id="theCode" class="form-control" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;"></textarea> <ul> <li ng-repeat="i in dummy" ng-bind="i"></li> </ul> </div> </div>')($scope);
-				console.log($(element)[0].childNodes[1].childNodes[0]);
-				console.log(element);
 				$scope.$digest();
-				console.log($(element).find("li"));
-				console.log(element);
 
 				expect($(element).find("li").length).toBe(5);
 
 				$scope.dummy.shift();
 				$scope.$digest();
+
 				expect($(element).find("li").length).toBe(4);
 			}));
 			it("should change when the ng-repeat changes the code", function() {

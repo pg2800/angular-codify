@@ -8,7 +8,7 @@ angular.module('codify', ["ngRoute"])
 		,restrict: 'A' // Only as Attribute
 		,scope: false // Uses the current scope
 		,compile: function compile(templateElement, templateAttrs) {
-			var init = templateElement[0].outerHTML.replace(codifyInRegExp,'')
+			var init = (templateElement.clone()).wrap('<div></div>').parent().html().replace(codifyInRegExp,'')
 			,identedTabs = init.match(lastTabs) // We match for the tabs of last closing tag in the string
 			,identedTabsRegExp; // We need to remove as many tabs as needed to have the code display properly
 
@@ -23,7 +23,7 @@ angular.module('codify', ["ngRoute"])
 			return function link(scope, instanceElement, instanceAttrs) {
 				if(!instanceAttrs.codifyIn) return;
 				var options = instanceAttrs.codifyIn.split(':')
-				,element = identedTabsRegExp? instanceElement[0].outerHTML.replace(identedTabsRegExp,'') : instanceElement[0].outerHTML;
+				,element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
 
 				instanceAttrs.codifyIn = options[0];
 				instanceAttrs.flag = options[1];
@@ -43,11 +43,9 @@ angular.module('codify', ["ngRoute"])
 				selectedScope = scopes[instanceAttrs.flag] || scopes.inScope;
 				selectedScope[instanceAttrs.codifyIn] = {linked: element.replace(codifyInRegExp,''), compiled: init};
 				$timeout(function (){
-					// instanceElement.attr("id") && (instanceElement = $("#"+instanceElement.attr("id")));
-					var element = identedTabsRegExp? instanceElement[0].outerHTML.replace(identedTabsRegExp,'') : instanceElement[0].outerHTML;
-					console.log(element);
+					var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
 					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
-				}, 3000);
+				}, 0);
 			}
 		}
 	};

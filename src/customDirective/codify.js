@@ -23,7 +23,8 @@ angular.module('codify', ["ngRoute"])
 			return function link(scope, instanceElement, instanceAttrs) {
 				if(!instanceAttrs.codifyIn) return;
 				var options = instanceAttrs.codifyIn.split(':')
-				,element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
+				,element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html()
+				,watch = options.slice(1).indexOf('watch') > -1;
 
 				instanceAttrs.codifyIn = options[0];
 				instanceAttrs.flag = options[1];
@@ -45,7 +46,8 @@ angular.module('codify', ["ngRoute"])
 				$timeout(function (){
 					var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
 					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
-				}, 0);
+				}, 0); 
+				// if(watch) scope.$watch(instanceElement, listener, objectEquality);
 			}
 		}
 	};

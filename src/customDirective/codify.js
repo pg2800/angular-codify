@@ -1,6 +1,6 @@
 angular.module('codify', ["ngRoute"])
 .directive('codifyIn', ["$timeout", function ($timeout) {
-	var codifyInRegExp = /\s?(?:(?:data|x)[-:_])?codify[-:_]in\s*?=\s*?".*?"/i
+	var codifyInRegExp = /\s?(?:(?:data|x)[-:_])?codify[-:_]in\s*?=\s*?"[^"]*?"/i
 	,lastTabs = /(\t*)(.+?)$/;
 
 	return {
@@ -12,7 +12,7 @@ angular.module('codify', ["ngRoute"])
 			,identedTabs = init.match(lastTabs) // We match for the tabs of last closing tag in the string
 			,identedTabsRegExp; // We need to remove as many tabs as needed to have the code display properly
 
-			// If the last closing tag had tabs at the beginning
+			// If the last closing tag had tabs at the beginning.
 			// We count them and create a regular expresion to remove them in every line.
 			if(identedTabs && identedTabs.length>1) 
 				identedTabsRegExp = new RegExp("^\t{"+identedTabs[1].length+"}","mg");
@@ -44,11 +44,12 @@ angular.module('codify', ["ngRoute"])
 				selectedScope = scopes[instanceAttrs.flag] || scopes.inScope;
 				selectedScope[instanceAttrs.codifyIn] = {linked: element.replace(codifyInRegExp,''), compiled: init};
 
-				scope.$apply(); 
-				var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
-				selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
+				$timeout(function() {
+					var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
+					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
+				}, 0);
 				// if(watch) scope.$watch(instanceElement, listener, objectEquality);
-			}
+			};
 		}
 	};
 }]);

@@ -44,10 +44,9 @@ angular.module('codify', ["ngRoute"])
 				selectedScope = scopes[instanceAttrs.flag] || scopes.inScope;
 				selectedScope[instanceAttrs.codifyIn] = {linked: element.replace(codifyInRegExp,''), compiled: init};
 
-				scope.$apply(function (){
-					var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
-					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
-				}); 
+				scope.$apply(); 
+				var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
+				selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
 				// if(watch) scope.$watch(instanceElement, listener, objectEquality);
 			}
 		}

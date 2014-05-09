@@ -119,6 +119,16 @@ describe("Codify Custom Directive", function() {
 			expect(obj.compiled).not.toEqual(obj.code);
 			expect(obj.code).not.toEqual(obj.linked);
 		}));
+		//
+		it("has a watch", function() {
+			var element = $compile('<div data-codify-in="obj:inRoot:watch"></div>')($scope);
+			$scope.$digest();
+
+			expect(obj.watch).toBeDefined();
+		});
+		it("should watch the code for changes", function() {
+
+		});
 
 		describe("Testing if changes are made when the scope changes and angular changes the markup", function() {
 			it("must be compatible with ngRepeat-like directives", inject(function() {
@@ -140,5 +150,5 @@ describe("Codify Custom Directive", function() {
 			});
 		});
 
-	});
+});
 });

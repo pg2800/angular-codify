@@ -96,7 +96,7 @@ describe("Codify Custom Directive", function() {
 			var element = $compile('<div data-codify-in="obj:inScope"></div>')($scope)
 			,obj = $scope.obj;
 
-			$timeout.flush();
+			// $timeout.flush();
 
 			expect(obj.code).toBeDefined();
 			expect(obj.compiled).toBeDefined();

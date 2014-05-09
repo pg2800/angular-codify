@@ -20,7 +20,7 @@ angular.module('codify', ["ngRoute"])
 			// Remove tabs from initial code:
 			identedTabsRegExp && (init = init.replace(identedTabsRegExp, ''));
 
-			return function link(scope, instanceElement, instanceAttrs) {
+			return function postLink(scope, instanceElement, instanceAttrs) {
 				if(!instanceAttrs.codifyIn) return;
 				var options = instanceAttrs.codifyIn.split(':')
 				,element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html()

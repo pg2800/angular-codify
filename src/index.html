@@ -11,7 +11,7 @@
 
 	<!-- HighlightJS :: Style --> <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
 </head>
-<body>
+<body ng-init="dummy=[1,2,3,4,5]">
 	<br />
 	<br />
 	<br />
@@ -108,18 +108,20 @@
 		<p class="lead">Lets write a more complicated example but using HighlightJS and Angular-HighlightJS to display the code.</p>
 		<br />
 		<p>Lets create something where we can write and display our code at the same time like:</p>
-		<div data-hljs="" data-source="theExample.code" data-language="html"></div>
+		<div data-hljs="" data-source="theExample.watch" data-language="html"></div>
 		<div data-hljs="" data-source="dynamicCode.compiled" data-language="html"></div>
 
 		<div id="theexample" data-codify-in="theExample:inRoot">
 			<div class="form-group">
 				<label for="example">Fun easy stuff.</label>
-				<textarea id="theCode" class="form-control" id="example" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;"></textarea>
-				<ul ng-init="dummy=[1,2,3,4,5]">
+				<textarea id="theCode" class="form-control" id="example" name="example" placeholder="Write your code" data-ng-model="theCode" style="min-height:250px;">
+				</textarea>
+				<ul>
 					<li ng-repeat="i in dummy" ng-bind="i"></li>
 				</ul>
 			</div>
 		</div>
+		<button type="button" ng-init="i=5" ng-click="dummy.push(i=i+1)"> Add() </button>
 
 		<div data-codify-in="dynamicCode:inRoot" data-hljs="" data-source="theCode"></div>
 		<br />

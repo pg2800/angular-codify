@@ -48,7 +48,11 @@ angular.module('codify', ["ngRoute"])
 					var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
 					selectedScope[instanceAttrs.codifyIn].code = element.replace(codifyInRegExp,'');
 				}, 0);
-				// if(watch) scope.$watch(instanceElement, listener, objectEquality);
+				if(!watch) scope.$watch(instanceElement, function(){
+					console.log("hola");
+					var element = identedTabsRegExp? (instanceElement.clone()).wrap('<div></div>').parent().html().replace(identedTabsRegExp,'') : (instanceElement.clone()).wrap('<div></div>').parent().html();
+					selectedScope[instanceAttrs.codifyIn].watch = element.replace(codifyInRegExp,'');
+				}, true);
 			};
 		}
 	};
